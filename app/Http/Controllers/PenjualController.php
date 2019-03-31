@@ -71,7 +71,7 @@ class PenjualController extends Controller
             foreach($request->file('filename') as $image)
             {
                 $name=$image->getClientOriginalName();
-                $image->move(public_path().'/images/', $name);  
+                $image->move(public_path().'/images/product/', $name);  
                 $data[] = $name;  
             }
         }

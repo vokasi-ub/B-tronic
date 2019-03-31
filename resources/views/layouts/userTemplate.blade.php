@@ -355,6 +355,7 @@
 	
     <!-- Select Plugin Js -->	
     <script src="{{ asset('backend/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
 
 	<!-- Jquery CountTo Plugin Js -->
     <script src="{{ asset('backend/plugins/jquery-countto/jquery.countTo.js') }}"></script>
@@ -402,5 +403,6 @@
 	
     <!-- Demo Js -->
     <script src="{{ asset('backend/js/demo.js') }}"></script>
+	
 </body>
 </html>

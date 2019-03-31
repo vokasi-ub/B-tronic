@@ -22,7 +22,9 @@ class CreateUsersTable extends Migration
             $table->string('status',10);
             $table->string('gender',15)->nullable();
             $table->string('id_province',2)->nullable();
-            $table->string('id_city',7)->nullable();
+            $table->string('id_city',4)->nullable();
+            $table->string('id_district',7)->nullable();
+            $table->string('id_village',10)->nullable();
             $table->longText('address')->nullable();
             $table->string('foto',200)->nullable();
             $table->string('telp',15)->nullable();

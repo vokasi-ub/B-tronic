@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +18,10 @@ Auth::routes();
 Auth::routes(['verify' => true]); 
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/getcity/{id}','HomeController@getCity');
+Route::get('/home/getkec/{id}','HomeController@getKec');
+Route::get('/home/getkel/{id}','HomeController@getKel');
+Route::post('updateBio', 'HomeController@update');
 
 Route::resource('/kategori', 'KategoriController');
 Route::post('tambahKategori', 'KategoriController@store');
@@ -39,3 +42,4 @@ Route::post('addIklan', 'PenjualController@store');
 Route::get('editIklan/{id}', 'PenjualController@edit');
 Route::post('updateIklan/{id}', 'PenjualController@update');
 Route::get('hapusIklan/{id}', 'PenjualController@destroy');
+

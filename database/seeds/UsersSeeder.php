@@ -20,6 +20,8 @@ class UsersSeeder extends Seeder
         	'foto' => 'icon.jpg',
         	'id_province' => '35',
         	'id_city' => '3507',
+        	'id_district' => '3507270',
+        	'id_village' => '3507270010',
         	'address' => 'Jl.Ngamarto Lawang',
         	'telp' => '080000000',
         	'status' => 'admin'

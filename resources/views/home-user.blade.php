@@ -1,7 +1,5 @@
 @extends('layouts.userTemplate')
 @section('contents')
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-  
 <div class="container-fluid">
             <div class="block-header">
                 <h2>DASHBOARD</h2>
@@ -66,13 +64,6 @@
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-					
-						@if(session('warning'))
-						<div class="alert alert-info" style="font-size:25px">
-						{{ session('warning') }} <br>
-						<strong>Click</strong> here
-						</div> 
-						@else 
 						<div class="header">
                             <h2>
                                 TABS WITH ICON TITLE
@@ -215,20 +206,13 @@
                                 </div>
                             </div>
                         </div>
-						@endif
-                      
                     </div>
                 </div>
             </div>
             <!-- #END# Tabs With Icon Title -->
-
-        
-            
-            </div>
-
+</div>
+	
 <script type="text/javascript">
-
-
     $(document).ready(function() {
 
       $(".btn-primary").click(function(){ 
