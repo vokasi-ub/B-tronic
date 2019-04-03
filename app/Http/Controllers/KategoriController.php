@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \Auth;
 use DB;
+use \App\ModKategori;
 
 class KategoriController extends Controller
 {
@@ -19,8 +20,15 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        $kategori = DB::select('select * from kategori order by id_kategori asc');
-		return view('pageKategori.index', compact('kategori'));
+		$data = \Auth::user()->status;
+			if ($data == 'admin'){
+				$kategori = ModKategori::all();
+				return view('pageKategori.index', compact('kategori'));
+			}
+			else{
+				return back();
+			}
+        
     }
 
     /**
@@ -70,10 +78,16 @@ class KategoriController extends Controller
      */
     public function edit($id)
     {
-        $data = DB::select('select * from kategori where id_kategori =?', [$id]);
-		    return view('pageKategori.editKategori', compact('data'));
+		$status = \Auth::user()->status;
+			if ($status == 'admin'){
+				$data = DB::select('select * from kategori where id_kategori =?', [$id]);
+				return view('pageKategori.editKategori', compact('data'));
+			}else {
+				return back();
+			}
+        
     }
-
+	
     /**
      * Update the specified resource in storage.
      *

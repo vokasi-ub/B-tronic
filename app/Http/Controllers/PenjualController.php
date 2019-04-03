@@ -25,15 +25,14 @@ class PenjualController extends Controller
 		return view('pagePenjual.index', compact('kategori','product'));
     }
 	
-	public function active()
+	public function active($id)
     {	
-		
 		$data = \Auth::user()->id;	
         $product = DB::select('select * from product where status="active" and id_user =?',[$data]);
 	    return view('pagePenjual.active', compact('product'));
     }
 		
-	public function pending()
+	public function pending($id)
     {	
 		$data = \Auth::user()->id;	
         $product = DB::select('select * from product where status="pending" and id_user =?',[$data]);

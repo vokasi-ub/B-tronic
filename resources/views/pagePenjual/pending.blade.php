@@ -9,7 +9,7 @@
             <div class="row clearfix">
             @foreach($product as $row)
                 <!-- With Captions -->
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
 							
@@ -37,11 +37,11 @@
                                 <!-- Wrapper for slides -->
                                 <div class="carousel-inner" role="listbox">
 									<div class="item active">
-                                       <img style="width:100%; height:280px" src="{{ asset('/images/'.array_first(json_decode($row->img))) }}" />
+                                       <img style="width:100%; height:200px" src="{{ asset('/images/product/'.array_first(json_decode($row->img))) }}" />
                                     </div>
 									<?php foreach (json_decode($row->img)as $gambar) { ?>									
 										<div class="item">
-											<img style="width:100%; height:280px" src="{{ asset('/images/'.$gambar) }}">
+											<img style="width:100%; height:200px" src="{{ asset('/images/product/'.$gambar) }}">
 										</div>
 									<?php } ?>
                                 </div>

@@ -1,5 +1,6 @@
 @extends('layouts.userTemplate')
 @section('contents')
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <div class="container-fluid">
             <div class="block-header">
                 <h2>DASHBOARD</h2>

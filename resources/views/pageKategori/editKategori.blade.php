@@ -1,40 +1,46 @@
 @extends('layouts.adminTemplate')
 @section('contents')
-	
-	<div class="animated fadeIn">
-                <div class="row">
-				@foreach($data as $p)
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                               <i class="fa fa-tags"></i> <strong class="card-title">Update Data Kategori : {{ $p->kategori }} </strong>
-                            </div>
-                            <div class="card-body">
-								<form action="<?php echo url('updateKategori/'.$p->id_kategori)?>" class="form-horizontal" method="post" enctype="multipart/form-data">
-								{{ csrf_field() }}
-                                            <div class="input-group">
-                                              <span class="input-group-addon"><i class="fa fa-tags"></i> Kategori </span>
-											  <input title="Nama Kategori"type="text" name="kategori" placeholder="Kategori"autocomplete="off" required class="form-control" value="{{ $p->kategori }}">
-                                            </div><br>
-											<div class="input-group">
-												<span class="input-group-addon"><i class="fa fa-list-alt"></i> Description</span>
-												<input title="Description"type="text" name="description" placeholder="Description" autocomplete="off" required class="form-control" value="{{ $p->description }}">
-											</div>
-                                            <div><br>
-											<div class="col-md-2">
-                                                <button id="payment-button" type="submit" class="btn btn-md btn-info btn-block">
-                                                    <i class="fa fa-save"></i>&nbsp;
-                                                    <span id="payment-button-amount">Simpan</span>
-                                                  
-                                                </button>
-                                            </div>
-                                            </div>
-                                        </form>
-								
-                            </div>
+<div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+					
+						@if(session('warning'))
+						<div class="alert alert-info" style="font-size:25px">
+						{{ session('warning') }}
+						</div>
+						@endif
+                        <div class="header">
+                            <h2>Update Kategori : </h2>
                         </div>
+						@foreach($data as $p)
+                        <div class="body">
+                           <form action="<?php echo url('updateKategori/'.$p->id_kategori)?>" class="form-horizontal" method="post" enctype="multipart/form-data">
+							{{ csrf_field() }}
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" autocomplete="off" name="kategori" value="{{$p->kategori}}" required>
+                                        <label class="form-label">Kategori</label>
+                                    </div>
+                                </div>
+								<br>
+								 <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" autocomplete="off" class="form-control" name="description" value="{{$p->description}}" required>
+                                        <label class="form-label">Description</label>
+                                    </div>
+                                </div>
+								<br>
+                                <div class="form-group">
+                                    <input type="checkbox" id="checkbox" name="checkbox" required>
+                                    <label for="checkbox">I have read and accept the terms</label>
+                                </div>
+                                <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                            </form>
+                        </div>		
+						
+                      @endforeach
                     </div>
-			@endforeach
-			</div>
-    </div>
+                </div>
+            </div>
+           
 @endsection

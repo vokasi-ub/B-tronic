@@ -284,9 +284,8 @@
                     <div class="email">{{ Auth::user()->email }}</div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
-                            <li role="separator" class="divider"></li>
+                        <ul class="dropdown-menu pull-right">	
+                           
                             <li><a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -314,17 +313,12 @@
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">widgets</i>
-                            <span>Manage Product</span>
+                            <span>Manage </span>
                         </a>
                         <ul class="ml-menu">
                             <li>
                                 <a href="{{ url('/kategori') }}">
                                     <span>Category</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('/product') }}">
-                                    <span>Product</span>
                                 </a>
                             </li>
                         </ul>

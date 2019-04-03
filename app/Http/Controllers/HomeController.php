@@ -25,21 +25,24 @@ class HomeController extends Controller
      */
     public function index()
     {
+		$tgl = date('d-M-Y');
+		$id = \Auth::user()->id;
+		
 		$data = \Auth::user()->status;
 			if ($data == 'admin'){
-				return view('home-admin');
+				$total_user = DB::select('select count(*)as total from users where status != "admin" and email_verified_at != "null"');
+				$active_product = DB::select('select count(*)as active from product where status="active"');
+				$pending_product = DB::select('select count(*)as pending from product where status="pending"');
+				return view('home-admin', compact('tgl','total_user','active_product','pending_product'));
 			}
 			else{
-				$tgl = date('d-M-Y');
-				$id = \Auth::user()->id;
-				
 				$provinsi = \Auth::user()->id_province;	
 				$kota = \Auth::user()->id_city;	
 				$alamat = \Auth::user()->address;	
 				$foto = \Auth::user()->foto;	
 				$gender = \Auth::user()->gender;	
-				$telp = \Auth::user()->telp;	
-				
+				$telp = \Auth::user()->telp;
+					
 				$kategori = DB::select('select * from kategori');
 				$province = DB::select('select * from provinces order by name');
 				$product = DB::select('select * from product where id_user =?',[$id]);
@@ -76,28 +79,7 @@ class HomeController extends Controller
         return json_encode($kel);
 	}
 	
-	public function update(Request $request)
-    {	
-		$id = \Auth::user()->id;	
-		
-		$file       = $request->file('foto');
-        $fileName   = $file->getClientOriginalName();
-        $request->file('foto')->move("/image/user/", $fileName);
-		
-        DB::table('users')->where('id',$id)->update([
-            'name' => $request->name,
-            'gender' => $request->gender,
-            'id_province' => $request->province,
-            'id_city' => $request->city,
-            'id_district' => $request->kec,
-            'id_village' => $request->kel,
-            'address' => $request->address,
-            'telp' => $request->telp,
-			'foto' => $fileName
-		]);	
-		
-		return redirect('home');
-    }
-
+	
+	
 
 }

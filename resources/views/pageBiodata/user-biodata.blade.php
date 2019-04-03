@@ -126,7 +126,7 @@
                                 </div>
 								<p><br>Foto Profile</p>
 								<div class="input-group control-group increment" >
-											  <input type="file" name="foto" class="form-control">
+									  <input type="file" name="foto" class="form-control">
 								</div>
                                 <div class="form-group">
                                     <input type="checkbox" id="checkbox" name="checkbox" required>

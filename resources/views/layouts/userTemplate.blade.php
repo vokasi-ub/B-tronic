@@ -278,7 +278,8 @@
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="/backend/images/icon.png" width="50" height="50" alt="User" />
+                    <img style="width:50px; height:50px;" src="/images/user/{{ Auth::user()->foto }}" alt="Profile Image" />
+                  
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</div>
@@ -286,7 +287,7 @@
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
+                            <li><a href="/Biodata/{{ encrypt(Auth::user()->id) }}"><i class="material-icons">person</i>Profile</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -313,13 +314,13 @@
                     </li>
                     <li class="header">IKLAN SAYA</li>
                     <li>
-                        <a href="{{ url('/product-pending') }}">
+                        <a href="/product-pending/{{ encrypt(Auth::user()->id) }}">
                             <i class="material-icons col-red">donut_large</i>
                             <span>Product Pending</span>
                         </a>
                     </li>
 					  <li>
-                        <a href="{{ url('/product-active') }}">
+                        <a href="/product-active/{{ encrypt(Auth::user()->id) }}">
                             <i class="material-icons col-green">donut_large</i>
                             <span>Product Active</span>
                         </a>

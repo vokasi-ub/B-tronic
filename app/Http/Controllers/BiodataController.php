@@ -21,6 +21,17 @@ class BiodataController extends Controller
     {
        
     }
+	
+	public function biodata($id){
+        $id_Real= decrypt($id);
+		$data_lokasi = DB::select('select a.*,b.name as provinsi,c.name as kota, d.name as kec, e.name as kel from users a join provinces b on a.id_province = b.id
+                                                                         join cities c on a.id_city = c.id
+                                                                         join districts d on a.id_district = d.id
+                                                                         join villages e on a.id_village = e.id
+                                                                         where a.id =?', [$id_Real]);
+        $province = DB::select('select * from provinces order by name');
+		return view('pageBiodata.user-biodata-id', compact('data_lokasi','province'));
+	}
 
     /**
      * Show the form for creating a new resource.
@@ -78,7 +89,7 @@ class BiodataController extends Controller
 		
 		$file       = $request->file('foto');
         $fileName   = $file->getClientOriginalName();
-        $request->file('foto')->move("/image/user/", $fileName);
+        $request->file('foto')->move("images/user/", $fileName);
 		
         DB::table('users')->where('id',$id)->update([
             'name' => $request->name,
@@ -94,6 +105,41 @@ class BiodataController extends Controller
 		
 		return redirect('home');
     }
+
+    public function update2(Request $request)
+    {	
+		$id = \Auth::user()->id;	
+        $id_ect =  encrypt($id);
+		
+        DB::table('users')->where('id',$id)->update([
+            'name' => $request->name,
+            'gender' => $request->gender,
+            'id_province' => $request->province,
+            'id_city' => $request->city,
+            'id_district' => $request->kec,
+            'id_village' => $request->kel,
+            'address' => $request->address,
+            'telp' => $request->telp
+		]);	
+		
+		return redirect('home');
+    }
+    
+    public function updateImg(Request $request)
+    {	
+		$id = \Auth::user()->id;	
+		
+		$file       = $request->file('foto');
+        $fileName   = $file->getClientOriginalName();
+        $request->file('foto')->move("images/user/", $fileName);
+		
+        DB::table('users')->where('id',$id)->update([
+			'foto' => $fileName
+		]);	
+		
+		return redirect('home');
+    }
+		
 
     /**
      * Remove the specified resource from storage.
