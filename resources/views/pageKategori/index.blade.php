@@ -1,6 +1,5 @@
 @extends('layouts.adminTemplate')
 @section('contents')
-	
 	<div class="container-fluid">
 			 <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -42,8 +41,8 @@
                                 </div>                        
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-danger waves-effect"><i class="fa fa-save"></i> SAVE</button>
+                        <div class="modal-footer js-sweetalert">
+                            <button type="submit" class="btn btn-danger waves-effect" data-type="success"><i class="fa fa-save"></i> SAVE</button>
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal"><i class="fa fa-close"></i> CLOSE</button>
                         </div>
 						</form>
@@ -69,12 +68,12 @@
 										@foreach ($kategori  as $p)
                                         <tr>
                                             <td>{{ $no++ }}</td>
-                                            <td>{{ $p->id_kategori }}</td>
+                                            <td>{{ $p->id }}</td>
                                             <td>{{ $p->kategori }}</td>
                                             <td>{{ $p->description }}</td>
                                             <td>{{ $p->created_at }}</td>
-                                            <td><a href="editKategori/{{ $p->id_kategori }}"class="btn default"><i class="fa fa-edit"></i> Edit</a> <br>
-												<a href="hapusKategori/{{ $p->id_kategori }}"
+                                            <td><a href="editKategori/{{ $p->id }}"class="btn default"><i class="fa fa-edit"></i> Edit</a> <br>
+												<a href="hapusKategori/{{ $p->id }}"
 												onClick="return confirm('Are you sure you want to delete?')
 												" class="btn default"><i class="fa fa-trash-o"></i> Hapus</a></td>
                                         </tr>
@@ -87,5 +86,8 @@
                 </div>
             </div>
 	</div> 
+@endsection
+@section('jsc')
+<script src="{{ asset('backend/js/pages/ui/dialogs.js') }}"></script>
 @endsection
 

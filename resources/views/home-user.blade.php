@@ -129,7 +129,7 @@
 											<select class="form-control show-tick" required name="id_kategori">
 											<option value="">- Select Jenis Kategori- </option>
 												@foreach($kategori as $row)
-												<option value="{{ $row->id_kategori }}">{{ $row->kategori }}</option>
+												<option value="{{ $row->id }}">{{ $row->kategori }}</option>
 												@endforeach
 											</select>
 											<hr>

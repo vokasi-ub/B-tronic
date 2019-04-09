@@ -75,9 +75,7 @@ class PenjualController extends Controller
             }
         }
 		
-       $id = 'ID-'.date('his');
        DB::table('product')->insert([
-		'id_product' => $id,
 		'id_kategori' => $request->id_kategori,
         'id_user' => $request->id_user,
         'nama_product' => $request->nama_product,
@@ -87,7 +85,7 @@ class PenjualController extends Controller
         'status' => 'pending'
 		]);
 	  
-		return redirect('home');
+		return redirect('user');
     }
 
     /**

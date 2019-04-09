@@ -103,7 +103,7 @@ class BiodataController extends Controller
 			'foto' => $fileName
 		]);	
 		
-		return redirect('home');
+		return redirect('user');
     }
 
     public function update2(Request $request)

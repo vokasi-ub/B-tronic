@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \Auth;
-use DB;
-use \App\ModKategori;
+use \App\Category_model;
 
 class KategoriController extends Controller
 {
@@ -20,15 +19,8 @@ class KategoriController extends Controller
      */
     public function index()
     {
-		$data = \Auth::user()->status;
-			if ($data == 'admin'){
-				$kategori = ModKategori::all();
-				return view('pageKategori.index', compact('kategori'));
-			}
-			else{
-				return back();
-			}
-        
+		$kategori = Category_model::all();
+		return view('pageKategori.index', compact('kategori'));
     }
 
     /**
@@ -49,14 +41,12 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-       $id = 'ID-'.substr(strtoupper($request->kategori),0,3).date('is');
-       DB::table('kategori')->insert([
-		'id_kategori' => $id,
-		'kategori' => $request->kategori,
-		'description' => $request->description
-	  ]);
-	  
-		return redirect('kategori');
+	   $Category_model = new Category_model;
+	   $Category_model->kategori = $request->kategori;
+	   $Category_model->description = $request->description;
+	   $Category_model->save();
+	   
+	   return redirect('kategori');
     }
 
     /**
@@ -78,14 +68,8 @@ class KategoriController extends Controller
      */
     public function edit($id)
     {
-		$status = \Auth::user()->status;
-			if ($status == 'admin'){
-				$data = DB::select('select * from kategori where id_kategori =?', [$id]);
-				return view('pageKategori.editKategori', compact('data'));
-			}else {
-				return back();
-			}
-        
+		$data = Category_model::where('id', $id)->get();
+		return view('pageKategori.editKategori', compact('data'));
     }
 	
     /**
@@ -97,10 +81,11 @@ class KategoriController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::table('kategori')->where('id_kategori',$id)->update([
-		'kategori' => $request->kategori,
-		'description' => $request->description
-		]);		
+		$Category = Category_model::find($id);
+		$Category->kategori = $request->kategori;
+	    $Category->description = $request->description;
+		$Category->save();
+		
 		return redirect('kategori');
     }
 	
@@ -112,7 +97,8 @@ class KategoriController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('kategori')->where('id_kategori',$id)->delete();
+		$Category = Category_model::find($id);
+		$Category->delete();
 		return redirect('kategori');
     }
 }

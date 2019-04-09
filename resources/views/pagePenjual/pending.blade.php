@@ -26,12 +26,12 @@
                             </ul>
                         </div>
                         <div class="body">
-                            <div id="carousel-example-generic_{{$row->id_product}}" class="carousel slide" data-ride="carousel">
+                            <div id="carousel-example-generic_{{$row->id}}" class="carousel slide" data-ride="carousel">
                                 <!-- Indicators -->
                                 <ol class="carousel-indicators">
 									<?php $a = 0 ?>
 									<?php foreach (json_decode($row->img)as $gambar) { ?>
-                                    <li data-target="#carousel-example-generic_{{$row->id_product}}" data-slide-to="$a++" class=""></li>	
+                                    <li data-target="#carousel-example-generic_{{$row->id}}" data-slide-to="$a++" class=""></li>	
 									<?php } ?>
 							   </ol>
                                 <!-- Wrapper for slides -->
@@ -46,11 +46,11 @@
 									<?php } ?>
                                 </div>
                                 <!-- Controls -->
-                                <a class="left carousel-control" href="#carousel-example-generic_{{$row->id_product}}" role="button" data-slide="prev">
+                                <a class="left carousel-control" href="#carousel-example-generic_{{$row->id}}" role="button" data-slide="prev">
                                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                                     <span class="sr-only">Previous</span>
                                 </a>
-                                <a class="right carousel-control" href="#carousel-example-generic_{{$row->id_product}}" role="button" data-slide="next">
+                                <a class="right carousel-control" href="#carousel-example-generic_{{$row->id}}" role="button" data-slide="next">
                                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                                     <span class="sr-only">Next</span>
                                 </a>

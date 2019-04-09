@@ -16,7 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','status',
+        'name', 'email', 'password','status','foto',
     ];
 
     /**
@@ -36,4 +36,24 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+	
+	public function getProduct()
+    {
+       return $this->hasMany('App\Product_model', 'id_user','id');
+	   
+    }
+	
+	public function getProvince(){
+        return $this->belongsTo('App\Province_model', 'id_province', 'id');
+    }
+	public function getCity(){
+        return $this->belongsTo('App\City_model', 'id_city', 'id');
+    }
+	public function getDistrict(){
+        return $this->belongsTo('App\District_model', 'id_district', 'id');
+    }
+	public function getVillage(){
+        return $this->belongsTo('App\Village_model', 'id_village', 'id');
+    }
+	
 }

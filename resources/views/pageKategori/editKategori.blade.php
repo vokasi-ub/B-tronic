@@ -14,7 +14,7 @@
                         </div>
 						@foreach($data as $p)
                         <div class="body">
-                           <form action="<?php echo url('updateKategori/'.$p->id_kategori)?>" class="form-horizontal" method="post" enctype="multipart/form-data">
+                           <form action="<?php echo url('updateKategori/'.$p->id)?>" class="form-horizontal" method="post" enctype="multipart/form-data">
 							{{ csrf_field() }}
                                 <div class="form-group form-float">
                                     <div class="form-line">

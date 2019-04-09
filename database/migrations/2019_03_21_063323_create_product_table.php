@@ -14,9 +14,9 @@ class CreateProductTable extends Migration
     public function up()
     {
         Schema::create('product', function (Blueprint $table) {
-			$table->primary('id_product');
-			$table->string('id_product',20);
-			$table->string('id_kategori',10);
+			$table->bigIncrements('id');
+			$table->unsignedBigInteger('id_kategori');
+			$table->foreign('id_kategori')->references('id')->on('kategori')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('id_user');
             $table->string('nama_product');
             $table->double('harga');
