@@ -26,9 +26,8 @@
                         </div>
                         <div class="content">
                             <div class="text">PRODUCT ACTIVE</div>
-                            <div class="number count-to">@foreach ($active_product as $p)
-														{{ $p->active }}
-														 @endforeach
+                            <div class="number count-to">{{ $active_product }} 
+														
 							</div>
                         </div>
                     </div>
@@ -40,9 +39,8 @@
                         </div>
                         <div class="content">
                             <div class="text">PRODUCT PENDING</div>
-                            <div class="number count-to">@foreach ($pending_product as $p)
-														{{ $p->pending }}
-														 @endforeach
+                            <div class="number count-to">{{ $pending_product }}
+								
 						
 							</div>
                         </div>

@@ -28,27 +28,23 @@ Route::resource('user','UsersController')->middleware(isUser::class);
 Route::get('/home/getcity/{id}','HomeController@getCity');
 Route::get('/home/getkec/{id}','HomeController@getKec');
 Route::get('/home/getkel/{id}','HomeController@getKel');
-Route::get('Biodata/{id}', 'BiodataController@biodata');
-Route::post('updateBio', 'BiodataController@update');
-Route::post('updateBio2', 'BiodataController@update2');
-Route::post('updateImgBio', 'BiodataController@updateImg');
+Route::get('Biodata/{id}', 'BiodataController@biodata')->middleware(isUser::class);
+Route::post('updateBio', 'BiodataController@update')->middleware(isUser::class);
+Route::post('updateBio2', 'BiodataController@update2')->middleware(isUser::class);
+Route::post('updateImgBio', 'BiodataController@updateImg')->middleware(isUser::class);
 
 Route::resource('/kategori', 'KategoriController')->middleware(isAdmin::class);
 Route::post('tambahKategori', 'KategoriController@store')->middleware(isAdmin::class);
 Route::get('editKategori/{id}', 'KategoriController@edit')->middleware(isAdmin::class);
 Route::post('updateKategori/{id}', 'KategoriController@update')->middleware(isAdmin::class);
 Route::get('hapusKategori/{id}', 'KategoriController@destroy')->middleware(isAdmin::class);
-
-Route::resource('/product', 'ProductController')->middleware(isUser::class);
-Route::post('tambahProduct', 'ProductController@store')->middleware(isUser::class);
-Route::get('editProduct/{id}', 'ProcuctController@edit')->middleware(isUser::class);
-Route::post('updateProduct/{id}', 'ProductController@update')->middleware(isUser::class);
-Route::get('hapusProduct/{id}', 'ProductController@destroy')->middleware(isUser::class);
+Route::get('Pengajuan-product', 'PenjualController@admin')->middleware(isAdmin::class);
 
 Route::resource('/penjual', 'PenjualController')->middleware(isUser::class);
 Route::get('/product-pending/{id}', 'PenjualController@pending')->middleware(isUser::class);
 Route::get('/product-active/{id}', 'PenjualController@active')->middleware(isUser::class);
 Route::post('addIklan', 'PenjualController@store')->middleware(isUser::class);
-Route::get('editIklan/{id}', 'PenjualController@edit')->middleware(isUser::class);
-Route::post('updateIklan/{id}', 'PenjualController@update')->middleware(isUser::class);
-Route::get('hapusIklan/{id}', 'PenjualController@destroy')->middleware(isUser::class);
+Route::get('detail-product-dashboard/{id}','PenjualController@show')->middleware(isUser::class);
+Route::post('updateProduct', 'PenjualController@update')->middleware(isUser::class);
+Route::post('updateImgProduct', 'PenjualController@updateimg')->middleware(isUser::class);
+Route::get('delProduct/{id}', 'PenjualController@destroy');

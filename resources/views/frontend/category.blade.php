@@ -42,9 +42,8 @@
 					<div class="shop_content">
 						<div class="shop_bar clearfix">
 							<div class="shop_product_count"><span>
-							@foreach($total_product as $t)
-							{{$t->jumlah}}
-							@endforeach </span> products found</div>
+							{{$total_product }}
+							</span> products found</div>
 							<div class="shop_sorting">
 								<span>Sort by:</span>
 								<ul>

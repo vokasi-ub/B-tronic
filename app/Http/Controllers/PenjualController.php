@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \Auth;
-use DB;
+use \App\Category_model;
+use \App\Product_model;
 
 class PenjualController extends Controller
 {
@@ -19,23 +20,26 @@ class PenjualController extends Controller
      */
     public function index()
     {	
-		$data = \Auth::user()->id;		
-        $kategori = DB::select('select * from kategori');
-        $product = DB::select('select * from product where id_user =?',[$data]);
-		return view('pagePenjual.index', compact('kategori','product'));
+		
     }
 	
 	public function active($id)
     {	
+		
 		$data = \Auth::user()->id;	
-        $product = DB::select('select * from product where status="active" and id_user =?',[$data]);
+        $product = Product_model::where('id_user', $data)
+							 ->where('status','=','active')
+							 ->get();
 	    return view('pagePenjual.active', compact('product'));
     }
 		
 	public function pending($id)
     {	
+		
 		$data = \Auth::user()->id;	
-        $product = DB::select('select * from product where status="pending" and id_user =?',[$data]);
+        $product = Product_model::where('id_user', $data)
+							 ->where('status','=','pending')
+							 ->get();
 		return view('pagePenjual.pending', compact('product'));
     }
 	
@@ -45,9 +49,9 @@ class PenjualController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function admin()
     {
-        
+        return view('pagePenjual.pengajuan');
     }
 
     /**
@@ -75,15 +79,15 @@ class PenjualController extends Controller
             }
         }
 		
-       DB::table('product')->insert([
-		'id_kategori' => $request->id_kategori,
-        'id_user' => $request->id_user,
-        'nama_product' => $request->nama_product,
-        'harga' => $request->harga,
-        'deskripsi' => $request->deskripsi,
-		'img' => json_encode($data),
-        'status' => 'pending'
-		]);
+		$Product_model = new Product_model;
+		$Product_model->id_kategori = $request->id_kategori;
+		$Product_model->id_user = $request->id_user;
+		$Product_model->nama_product = $request->nama_product;
+		$Product_model->harga = $request->harga;
+		$Product_model->deskripsi = $request->deskripsi;
+		$Product_model->img = json_encode($data);
+		$Product_model->status = 'pending';
+		$Product_model->save();
 	  
 		return redirect('user');
     }
@@ -96,19 +100,18 @@ class PenjualController extends Controller
      */
     public function show($id)
     {
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $data = DB::select('select * from product where id_product =?', [$id]);
-		return view('pageproduct.editproduct', compact('data'));
+	   $id_real = decrypt($id);
+	   $data = Product_model::join('kategori', 'product.id_kategori' ,'=', 'kategori.id')
+								 ->join('users', 'product.id_user', '=', 'users.id')
+								 ->join('provinces', 'users.id_province', '=', 'provinces.id')
+								 ->join('cities', 'users.id_city', '=', 'cities.id')
+								 ->join('districts', 'users.id_district', '=', 'districts.id')
+								 ->join('villages', 'users.id_village', '=', 'villages.id')
+								 ->select('product.*','product.id as key','kategori.*','users.*','provinces.name as provinsi','cities.name as kota','districts.name as kec','villages.name as kel')
+								 ->where('product.id', '=' ,[$id_real])
+								 ->get();
+								 
+       return view('pagePenjual.detailproduct', compact('data')); 
     }
 
     /**
@@ -118,17 +121,46 @@ class PenjualController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        DB::table('product')->where('id_product',$id)->update([
-            'id_kategori' => $request->id_kategori,
-            'email_user' => $request->email_user,
-            'nama_product' => $request->nama_product,
-            'harga' => $request->harga,
-            'deskripsi' => $request->deskripsi,
-            'status' => $request->status
-		]);		
-		return redirect('product');
+		$data = $request->id_product;
+		$id = encrypt($data);
+		
+		$Product = Product_model::find($data);
+		$Product->nama_product = $request->nama_product;
+		$Product->harga = $request->harga;
+		$Product->deskripsi = $request->deskripsi;
+		$Product->save();
+		
+		return redirect('detail-product-dashboard/'.$id);
+    }
+	public function updateimg(Request $request)
+    {
+		$this->validate($request, [
+
+                'filename' => 'required',
+                'filename.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+
+        ]);
+		
+		if($request->hasfile('filename'))
+        {
+            foreach($request->file('filename') as $image)
+            {
+                $name=$image->getClientOriginalName();
+                $image->move(public_path().'/images/product/', $name);  
+                $data[] = $name;  
+            }
+        }
+		
+		$key = $request->id_product;
+		$id = encrypt($key);
+		
+		$Product = Product_model::find($key);
+		$Product->img = json_encode($data);
+		$Product->save();
+		
+		return redirect('detail-product-dashboard/'.$id);
     }
 	
     /**
@@ -139,7 +171,11 @@ class PenjualController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('product')->where('id_product',$id)->delete();
-		return redirect('product');
+		$id_real = decrypt($id);
+		
+		$Product = Product_model::find($id_real);
+		$Product->delete();
+		
+		return redirect('user');
     }
 }

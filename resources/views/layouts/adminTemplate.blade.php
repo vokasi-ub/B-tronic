@@ -322,7 +322,7 @@
                  
                     <li class="header">DATA PENGAJUAN</li>
                     <li>
-                        <a href="javascript:void(0);">
+                        <a href="{{ url('/Pengajuan-product') }}">
                             <i class="material-icons col-green">donut_large</i>
                             <span>Pengajuan Product</span>
                         </a>

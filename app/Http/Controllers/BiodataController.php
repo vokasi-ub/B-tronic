@@ -4,7 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \Auth;
-use DB;
+use \App\User;
+use \App\Product_model;
+use \App\Category_model;
+use \App\Province_model;
+use \App\City_model;
+use \App\District_model;
+use \App\Village_model;
 
 class BiodataController extends Controller
 {
@@ -24,12 +30,17 @@ class BiodataController extends Controller
 	
 	public function biodata($id){
         $id_Real= decrypt($id);
-		$data_lokasi = DB::select('select a.*,b.name as provinsi,c.name as kota, d.name as kec, e.name as kel from users a join provinces b on a.id_province = b.id
-                                                                         join cities c on a.id_city = c.id
-                                                                         join districts d on a.id_district = d.id
-                                                                         join villages e on a.id_village = e.id
-                                                                         where a.id =?', [$id_Real]);
-        $province = DB::select('select * from provinces order by name');
+																		 
+		$data_lokasi = Product_model::join('users', 'product.id_user', '=', 'users.id')
+								 ->join('provinces', 'users.id_province', '=', 'provinces.id')
+								 ->join('cities', 'users.id_city', '=', 'cities.id')
+								 ->join('districts', 'users.id_district', '=', 'districts.id')
+								 ->join('villages', 'users.id_village', '=', 'villages.id')
+								 ->select('users.*','provinces.name as provinsi','cities.name as kota','districts.name as kec','villages.name as kel')
+								 ->where('users.id', '=' ,[$id_Real])
+								 ->get();
+								 
+        $province = Province_model::all();
 		return view('pageBiodata.user-biodata-id', compact('data_lokasi','province'));
 	}
 
@@ -91,17 +102,18 @@ class BiodataController extends Controller
         $fileName   = $file->getClientOriginalName();
         $request->file('foto')->move("images/user/", $fileName);
 		
-        DB::table('users')->where('id',$id)->update([
-            'name' => $request->name,
-            'gender' => $request->gender,
-            'id_province' => $request->province,
-            'id_city' => $request->city,
-            'id_district' => $request->kec,
-            'id_village' => $request->kel,
-            'address' => $request->address,
-            'telp' => $request->telp,
-			'foto' => $fileName
-		]);	
+		
+		$bio = User::find($id);
+		$bio->name = $request->name;
+		$bio->gender = $request->gender;
+		$bio->id_province = $request->province;
+		$bio->id_city = $request->city;
+		$bio->id_district = $request->kec;
+		$bio->id_village = $request->kel;
+		$bio->address = $request->address;
+		$bio->telp = $request->telp;
+		$bio->foto = $fileName;
+		$bio->save();
 		
 		return redirect('user');
     }
@@ -111,36 +123,37 @@ class BiodataController extends Controller
 		$id = \Auth::user()->id;	
         $id_ect =  encrypt($id);
 		
-        DB::table('users')->where('id',$id)->update([
-            'name' => $request->name,
-            'gender' => $request->gender,
-            'id_province' => $request->province,
-            'id_city' => $request->city,
-            'id_district' => $request->kec,
-            'id_village' => $request->kel,
-            'address' => $request->address,
-            'telp' => $request->telp
-		]);	
 		
-		return redirect('home');
+		$bio = User::find($id);
+		$bio->name = $request->name;
+		$bio->gender = $request->gender;
+		$bio->id_province = $request->province;
+		$bio->id_city = $request->city;
+		$bio->id_district = $request->kec;
+		$bio->id_village = $request->kel;
+		$bio->address = $request->address;
+		$bio->telp = $request->telp;
+		$bio->save();
+		
+		return redirect('Biodata/'.$id_ect);
     }
     
     public function updateImg(Request $request)
     {	
 		$id = \Auth::user()->id;	
+		$enc = encrypt($id);
 		
 		$file       = $request->file('foto');
         $fileName   = $file->getClientOriginalName();
         $request->file('foto')->move("images/user/", $fileName);
 		
-        DB::table('users')->where('id',$id)->update([
-			'foto' => $fileName
-		]);	
+		$Bio = User::find($id);
+		$Bio->foto = $fileName;
+		$Bio->save();
 		
-		return redirect('home');
+		return redirect('Biodata/'.$enc);
     }
 		
-
     /**
      * Remove the specified resource from storage.
      *

@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \Auth;
-use DB;
+use \App\Product_model;
+use \App\Category_model;
+use \App\Province_model;
+use \App\City_model;
+use \App\District_model;
+use \App\Village_model;
 
 class UsersController extends Controller
 {
@@ -23,6 +28,7 @@ class UsersController extends Controller
     {
 		$tgl = date('d-M-Y');
 		$id = \Auth::user()->id;
+		
 				$provinsi = \Auth::user()->id_province;	
 				$kota = \Auth::user()->id_city;	
 				$alamat = \Auth::user()->address;	
@@ -30,20 +36,31 @@ class UsersController extends Controller
 				$gender = \Auth::user()->gender;	
 				$telp = \Auth::user()->telp;
 					
-				$kategori = DB::select('select * from kategori');
-				$province = DB::select('select * from provinces order by name');
-				$product = DB::select('select * from product where id_user =?',[$id]);
-				$active_product = DB::select('select count(*)as active from product where status="active" and id_user =?',[$id]);
-				$pending_product = DB::select('select count(*)as pending from product where status="pending" and id_user =?',[$id]);
+				$kategori = Category_model::all();
+				$province = Province_model::all();
+				$product_on = Product_model::with('getKategori')->where('id_user', '=',[$id])
+																 ->where('status','=','active')
+																 ->get();
+				$product_off = Product_model::with('getKategori')->where('id_user', '=',[$id])
+																 ->where('status','=','pending')
+																 ->get();
+	
+				$active_product =  Product_model::where('status', '=' ,'active')
+												->where('id_user', '=' ,$id)
+												->count('*');
+						  
+				$pending_product = Product_model::where('status', '=' ,'pending')
+												->where('id_user', '=' ,$id)
+												->count('*');
 					
 				if ($provinsi == null || $kota == null || $alamat == null || $foto == null || $gender == null || $telp == null){
 					$biodata = '20%';
 					$notif = session()->flash('warning', 'Silahkan lengkapi Biodata anda terlebih dahulu !');
-					return view('pageBiodata.user-biodata', compact('province','product','active_product','pending_product','tgl','biodata','notif'));
+					return view('pageBiodata.user-biodata', compact('province','active_product','pending_product','tgl','biodata','notif'));
 				}else {
 					$notif = session()->flash('success', '');
 					$biodata = '100%';
-					return view('home-user', compact('kategori','product','active_product','pending_product','tgl','biodata','notif'));
+					return view('home-user', compact('kategori','active_product','pending_product','tgl','biodata','notif','product_on','product_off'));
 				}
     }
 

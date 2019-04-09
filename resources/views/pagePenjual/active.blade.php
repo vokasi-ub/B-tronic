@@ -3,7 +3,7 @@
 	
         <div class="container-fluid">
             <div class="block-header">
-				<h3>Product Pending</h3>
+				<h3>Product Active</h3>
             </div>
           
             <div class="row clearfix">

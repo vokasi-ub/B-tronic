@@ -1,5 +1,6 @@
 @extends('layouts.userTemplate')
 @section('contents')
+   <link href="{{ asset('backend/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <div class="container-fluid">
             <div class="block-header">
@@ -25,9 +26,8 @@
                         </div>
                         <div class="content">
                             <div class="text">PRODUCT ACTIVE</div>
-                            <div class="number count-to">@foreach ($active_product as $p)
-														{{ $p->active }}
-														 @endforeach
+                            <div class="number count-to">{{ $active_product }}
+													
 							</div>
                         </div>
                     </div>
@@ -39,9 +39,8 @@
                         </div>
                         <div class="content">
                             <div class="text">PRODUCT PENDING</div>
-                            <div class="number count-to">@foreach ($pending_product as $p)
-														{{ $p->pending }}
-														 @endforeach
+                            <div class="number count-to">{{ $pending_product }}
+														
 						
 							</div>
                         </div>
@@ -100,11 +99,7 @@
                                         <i class="material-icons">update</i> PRODUCT PENDING
                                     </a>
                                 </li>
-                                <li role="presentation">
-                                    <a href="#settings_with_icon_title" data-toggle="tab">
-                                        <i class="material-icons">settings</i> SETTINGS
-                                    </a>
-                                </li>
+                             
                             </ul>
 
                             <!-- Tab panes -->
@@ -179,32 +174,72 @@
 								</div>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="profile_with_icon_title">
-                                    <b>Profile Content</b>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, ut duo atqui exerci dicunt, ius impedit mediocritatem an. Pri ut tation electram moderatius.
-                                        Per te suavitate democritum. Duis nemore probatus ne quo, ad liber essent aliquid
-                                        pro. Et eos nusquam accumsan, vide mentitum fabellas ne est, eu munere gubergren
-                                        sadipscing mel.
-                                    </p>
+                                   <b>ACTIVE PRODUCT</b>
+									<p></p>
+								
+										<div class="table-responsive">
+											<table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+												<thead>
+													<tr>
+														<th>ID Product</th>
+														<th>Judul Product</th>
+														<th>Kategori</th>
+														<th>Harga</th>
+														<th>Created</th>
+														<th>Status</th>
+													</tr>
+												</thead>
+								
+												<tbody>
+													@foreach($product_on as $k)
+													<tr>
+														<td>{{$k->id}}</td>
+														<td>{{$k->nama_product}}</td>
+														<td>{{$k->getKategori->kategori}}</td>
+														<td>{{$k->harga}}</td>
+														<td>{{$k->created_at}}</td>
+														<td>{{$k->status}}</td>
+													</tr>
+												    @endforeach
+												</tbody>
+											</table>
+										</div>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="messages_with_icon_title">
-                                    <b>Message Content</b>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, ut duo atqui exerci dicunt, ius impedit mediocritatem an. Pri ut tation electram moderatius.
-                                        Per te suavitate democritum. Duis nemore probatus ne quo, ad liber essent aliquid
-                                        pro. Et eos nusquam accumsan, vide mentitum fabellas ne est, eu munere gubergren
-                                        sadipscing mel.
-                                    </p>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="settings_with_icon_title">
-                                    <b>Settings Content</b>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, ut duo atqui exerci dicunt, ius impedit mediocritatem an. Pri ut tation electram moderatius.
-                                        Per te suavitate democritum. Duis nemore probatus ne quo, ad liber essent aliquid
-                                        pro. Et eos nusquam accumsan, vide mentitum fabellas ne est, eu munere gubergren
-                                        sadipscing mel.
-                                    </p>
-                                </div>
+                                    <b>PENDING PRODUCT</b>
+									<p>Menunggu Proses Verifikasi Sistem</p>
+								
+										<div class="table-responsive">
+											<table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+												<thead>
+													<tr>
+														<th>ID Product</th>
+														<th>Judul Product</th>
+														<th>Kategori</th>
+														<th>Harga</th>
+														<th>Created</th>
+														<th>Status</th>
+													</tr>
+												</thead>
+								
+												<tbody>
+													@foreach($product_off as $k)
+													<tr>
+														<td>{{$k->id}}</td>
+														<td>{{$k->nama_product}}</td>
+														<td>{{$k->getKategori->kategori}}</td>
+														<td>{{$k->harga}}</td>
+														<td>{{$k->created_at}}</td>
+														<td>{{$k->status}}</td>
+													</tr>
+												    @endforeach
+												</tbody>
+											</table>
+										</div>
+									</div>
+                   
+                                
+                               
                             </div>
                         </div>
                     </div>
@@ -212,7 +247,17 @@
             </div>
             <!-- #END# Tabs With Icon Title -->
 </div>
-	
+
+	<script src="{{ asset('backend/plugins/jquery-datatable/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('backend/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ asset('backend/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('backend/plugins/jquery-datatable/extensions/export/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('backend/plugins/jquery-datatable/extensions/export/jszip.min.js') }}"></script>
+    <script src="{{ asset('backend/plugins/jquery-datatable/extensions/export/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('backend/plugins/jquery-datatable/extensions/export/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('backend/plugins/jquery-datatable/extensions/export/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('backend/plugins/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
+	<script src="{{ asset('backend/js/pages/tables/jquery-datatable.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
 

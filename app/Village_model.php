@@ -15,6 +15,7 @@ class Village_model extends Model
         return $this->belongsTo('App\District_model', 'district_id', 'id');
     }
 	
+	
 	public function getUser()
     {
        return $this->hasMany('App\user', 'id_village','id');

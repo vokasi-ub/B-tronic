@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Category_model;
 use \App\Product_model;
-use DB;
+
 class FrontendController extends Controller
 {
     /**
@@ -17,7 +17,7 @@ class FrontendController extends Controller
     {	
 		
 		$kategori =  Category_model::all();
-		$product =  Product_model::with('getKategori')->get();
+		$product =  Product_model::with('getKategori')->where('status', '!=', 'pending')->get();
 									
         return view('frontend/index',compact('kategori','product'));
     }
@@ -26,12 +26,10 @@ class FrontendController extends Controller
     {	
 		$id_real = decrypt($id);
 		$kategori = Category_model::all();
-	//	$deskategori = DB::select('Select * from kategori where id =?',[$id_real]);
 		$deskategori = Category_model::where('id', $id_real)->get();
-		$product = DB::select('select a.*,b.* from product a join kategori b on a.id_kategori = b.id
-								where a.id =?',[$id_real]);
-		$total_product = DB::select('select count(*)as jumlah from product where id =?',[$id_real]);
-								
+		$product = Product_model::with('getKategori')->where('status', '!=', 'pending')->get();
+		$total_product = Product_model::where('status', '!=', 'pending')->count('*');
+		
         return view('frontend/category',compact('kategori','deskategori','product','total_product'));
     }
 	
@@ -39,21 +37,16 @@ class FrontendController extends Controller
     {	
 		$id_real = decrypt($id);
 		$kategori = Category_model::all();
-		$product = DB::select('select a.*,b.*,c.*,d.name as provinsi, e.name as kota ,f.name as kec, g.name as kel 
-							   from product a join kategori b on a.id_kategori = b.id
-											  join users c on a.id_user = c.id
-											  join provinces d on c.id_province = d.id
-											  join cities e on c.id_city = e.id
-											  join districts f on c.id_district = f.id
-											  join villages g on c.id_village = g.id
-								where a.id =?',[$id_real]);
-
-		 /*	$data = Province_model::with('getUser')
-					City_model::with('getUser')
-					District_model::with('getUser')
-					Village_model::with('getUser')
-					->get(); 
-		 */
+		$product =  Product_model::join('kategori', 'product.id_kategori' ,'=', 'kategori.id')
+								 ->join('users', 'product.id_user', '=', 'users.id')
+								 ->join('provinces', 'users.id_province', '=', 'provinces.id')
+								 ->join('cities', 'users.id_city', '=', 'cities.id')
+								 ->join('districts', 'users.id_district', '=', 'districts.id')
+								 ->join('villages', 'users.id_village', '=', 'villages.id')
+								 ->select('product.*','kategori.*','users.*','provinces.name as provinsi','cities.name as kota','districts.name as kec','villages.name as kel')
+								 ->where('product.id', '=' ,[$id_real])
+								 ->where('product.status', '!=' ,'pending')
+								 ->get();
 					
         return view('frontend/detail-product',compact('kategori','product'));
     }
