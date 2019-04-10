@@ -51,8 +51,26 @@ class PenjualController extends Controller
      */
     public function admin()
     {
-        return view('pagePenjual.pengajuan');
+		$product = Product_model::join('kategori', 'product.id_kategori' ,'=', 'kategori.id')
+								 ->join('users', 'product.id_user', '=', 'users.id')
+								 ->select('product.*','product.id as key','product.status as sts','product.created_at as crt',
+										  'kategori.*','users.*','users.name as nama_user')
+								 ->where('product.status', '=' ,'pending')
+								 ->get();
+								 
+        return view('pagePenjual.pengajuan',compact('product'));
     }
+	
+	public function verifikasi($id){
+		
+		$id_real = decrypt($id);
+		
+		$Product = Product_model::find($id_real);
+		$Product->status = 'active';
+		$Product->save();
+		
+		return redirect('Pengajuan-product');
+	}
 
     /**
      * Store a newly created resource in storage.

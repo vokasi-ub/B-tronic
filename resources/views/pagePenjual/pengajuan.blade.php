@@ -22,18 +22,29 @@
                                             <th>Nama Product</th>
                                             <th>Kategori</th>
                                             <th>Created</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 										<?php $no=1;?>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
+										@foreach ($product as $k)
+										<tr>
+										<td>{{$no++}}</td>
+										<td>{{$k->nama_user}}</td>
+										<td>{{$k->key}}</td>
+										<td>{{$k->nama_product}}</td>
+										<td>{{$k->kategori}}</td>
+										<td>{{$k->sts}}</td>
+										<td>{{$k->crt}}</td>
+										<td><a href=""><button class="btn btn-primary">Detail</button></a>
+											<a href="/verifikasi-product/{{encrypt($k->key)}}" 
+											onClick="return confirm('Are you sure you want to change this product to active?')"
+											><button class="btn btn-success">Verifikasi</button></a>
+											
+										</td>
+										</tr>
+										@endforeach
                                     </tbody>
                                 </table>
                             </div>

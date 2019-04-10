@@ -39,6 +39,7 @@ Route::get('editKategori/{id}', 'KategoriController@edit')->middleware(isAdmin::
 Route::post('updateKategori/{id}', 'KategoriController@update')->middleware(isAdmin::class);
 Route::get('hapusKategori/{id}', 'KategoriController@destroy')->middleware(isAdmin::class);
 Route::get('Pengajuan-product', 'PenjualController@admin')->middleware(isAdmin::class);
+Route::get('verifikasi-product/{id}', 'PenjualController@verifikasi')->middleware(isAdmin::class);
 
 Route::resource('/penjual', 'PenjualController')->middleware(isUser::class);
 Route::get('/product-pending/{id}', 'PenjualController@pending')->middleware(isUser::class);
