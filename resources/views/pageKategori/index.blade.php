@@ -56,7 +56,7 @@
                                      <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>ID Kategori</th>
+                                           
                                             <th>Kategori</th>
                                             <th>Deskripsi</th>
                                             <th>Created</th>
@@ -68,7 +68,7 @@
 										@foreach ($kategori  as $p)
                                         <tr>
                                             <td>{{ $no++ }}</td>
-                                            <td>{{ $p->id }}</td>
+                                          
                                             <td>{{ $p->kategori }}</td>
                                             <td>{{ $p->description }}</td>
                                             <td>{{ $p->created_at }}</td>

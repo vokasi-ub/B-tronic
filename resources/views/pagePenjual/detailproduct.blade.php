@@ -133,7 +133,7 @@
 											<input type="hidden" autocomplete="off" class="form-control"  name="id_product" value="{{$row->key}}" required>
 										    <i class="fa fa-image"></i> Foto Product
 											<div class="input-group control-group increment" >
-											  <input type="file" name="filename[]" class="form-control">
+											  <input type="file" name="filename[]" class="form-control" required>
 											  <div class="input-group-btn"> 
 												<button class="btn btn-primary waves-effect" type="button"><i class="fa fa-plus"></i> Add</button>
 											  </div>

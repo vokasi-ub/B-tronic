@@ -31,8 +31,7 @@ class BiodataController extends Controller
 	public function biodata($id){
         $id_Real= decrypt($id);
 																		 
-		$data_lokasi = Product_model::join('users', 'product.id_user', '=', 'users.id')
-								 ->join('provinces', 'users.id_province', '=', 'provinces.id')
+		$data_lokasi = User::join('provinces', 'users.id_province', '=', 'provinces.id')
 								 ->join('cities', 'users.id_city', '=', 'cities.id')
 								 ->join('districts', 'users.id_district', '=', 'districts.id')
 								 ->join('villages', 'users.id_village', '=', 'villages.id')

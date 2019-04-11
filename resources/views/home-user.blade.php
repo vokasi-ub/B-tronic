@@ -181,7 +181,7 @@
 											<table class="table table-bordered table-striped table-hover js-basic-example dataTable">
 												<thead>
 													<tr>
-														<th>ID Product</th>
+														
 														<th>Judul Product</th>
 														<th>Kategori</th>
 														<th>Harga</th>
@@ -193,10 +193,10 @@
 												<tbody>
 													@foreach($product_on as $k)
 													<tr>
-														<td>{{$k->id}}</td>
+														
 														<td>{{$k->nama_product}}</td>
 														<td>{{$k->getKategori->kategori}}</td>
-														<td>{{$k->harga}}</td>
+														<td>Rp.{{ number_format($k->harga)}}</td>
 														<td>{{$k->created_at}}</td>
 														<td>{{$k->status}}</td>
 													</tr>
@@ -213,7 +213,7 @@
 											<table class="table table-bordered table-striped table-hover js-basic-example dataTable">
 												<thead>
 													<tr>
-														<th>ID Product</th>
+													
 														<th>Judul Product</th>
 														<th>Kategori</th>
 														<th>Harga</th>
@@ -225,10 +225,10 @@
 												<tbody>
 													@foreach($product_off as $k)
 													<tr>
-														<td>{{$k->id}}</td>
+														
 														<td>{{$k->nama_product}}</td>
 														<td>{{$k->getKategori->kategori}}</td>
-														<td>{{$k->harga}}</td>
+														<td>Rp.{{ number_format($k->harga)}}</td>
 														<td>{{$k->created_at}}</td>
 														<td>{{$k->status}}</td>
 													</tr>

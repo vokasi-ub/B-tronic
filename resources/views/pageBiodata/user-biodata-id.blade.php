@@ -133,15 +133,11 @@
                                                 </div>
                                             </div>
                                             
+                    
+											
                                             <div class="form-group">
                                                 <div class="col-sm-offset-2 col-sm-10">
-                                                    <input type="checkbox" id="terms_condition_check" class="chk-col-red filled-in" required />
-                                                    <label for="terms_condition_check">I agree to the <a href="#">terms and conditions</a></label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-offset-2 col-sm-10">
-                                                    <button type="submit" class="btn btn-danger">SUBMIT</button>
+                                                    <button type="submit" onClick="return confirm('Are you sure you want to submit?')" class="btn btn-danger">SUBMIT</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -173,6 +169,7 @@
                 </div>
             </div>
         </div>
+@endforeach	
  <script type="text/javascript">
     jQuery(document).ready(function ()
     {
@@ -257,5 +254,4 @@
             });
     });
 </script>
-@endforeach	
 @endsection

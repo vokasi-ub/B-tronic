@@ -27,8 +27,12 @@ class FrontendController extends Controller
 		$id_real = decrypt($id);
 		$kategori = Category_model::all();
 		$deskategori = Category_model::where('id', $id_real)->get();
-		$product = Product_model::with('getKategori')->where('status', '!=', 'pending')->get();
-		$total_product = Product_model::where('status', '!=', 'pending')->count('*');
+		$product = Product_model::with('getKategori')->where('status', '!=', 'pending')
+													 ->where('id_kategori', '=' ,$id_real)
+													 ->get();
+		$total_product = Product_model::where('status', '!=', 'pending')
+										 ->where('id_kategori', '=' ,$id_real)
+										 ->count('*');
 		
         return view('frontend/category',compact('kategori','deskategori','product','total_product'));
     }

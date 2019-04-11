@@ -30,13 +30,16 @@
 						<div class="product_category">Kategori : {{$i->kategori}}</div>
 						<div class="product_text"><p>Description : {{$i->description}}</p></div>
 						<div class="product_price">Rp. {{ number_format($i->harga,0) }}</div>
-						<div class="product_text">
-								<p> {{$i->name}} </p>
-								
-							
-						</div>
+					
 					</div>
 					<div class="col-lg-12">
+					<div class="contact_info_item d-flex flex-row align-items-center justify-content-start" style="width:400px">
+							<div class="contact_info_image"><img src="/images/user/{{$i->foto}}" alt=""></div>
+							<div class="contact_info_content">
+								<div class="contact_info_title">Penjual</div>
+								<div class="contact_info_text">{{$i->name}}</div>
+							</div>
+					</div>
 					<div class="contact_info_item d-flex flex-row align-items-center justify-content-start" style="width:400px">
 							<div class="contact_info_image"><img src="/frontend/home/images/contact_1.png" alt=""></div>
 							<div class="contact_info_content">
